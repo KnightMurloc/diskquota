@@ -653,7 +653,7 @@ disk_quota_worker_main(Datum main_arg)
 			MemoryAccounting_Reset();
 #endif /* GP_VERSION_NUM */
 
-			sleep_time = 0;
+			sleep_time              = 0;
 		}
 		loop_start_timestamp = GetCurrentTimestamp();
 
@@ -661,7 +661,7 @@ disk_quota_worker_main(Datum main_arg)
 		{
 			break;
 		}
-		CHECK_FOR_INTERRUPTS();
+CHECK_FOR_INTERRUPTS();
 
 		/*
 		 * Background workers mustn't call usleep() or any direct equivalent:
@@ -669,7 +669,7 @@ disk_quota_worker_main(Datum main_arg)
 		 * necessary, but is awakened if postmaster dies.  That way the
 		 * background process goes away immediately in an emergency.
 		 */
-		rc = DiskquotaWaitLatch(&MyProc->procLatch, WL_LATCH_SET | WL_TIMEOUT | WL_POSTMASTER_DEATH,
+													rc = DiskquotaWaitLatch(&MyProc->procLatch, WL_LATCH_SET | WL_TIMEOUT | WL_POSTMASTER_DEATH,
 		                        diskquota_naptime * 1000 - sleep_time);
 		ResetLatch(&MyProc->procLatch);
 
